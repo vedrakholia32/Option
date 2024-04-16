@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sticky Div Example</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="left">
+            <button class="button" onclick="showContent('content1', this)">
+                Button 1
+            </button>
+            <button class="button" onclick="showContent('content2', this)">
+                Button 2
+            </button>
+            <button class="button" onclick="showContent('content3', this)">
+                Button 3
+            </button>
+            <button class="button" onclick="showContent('content4', this)">
+                Button 4
+            </button>
+            <button class="button" onclick="showContent('content5', this)">
+                Button 5
+            </button>
+        </div>
+        <!-- Add more buttons here -->
+
+        <!-- Sticky div -->
+        <div class="right">
+            <div id="stickyDiv" class="stickydiv">
+                <div id="content1" class="content" style="display: none">
+
+                    <div class="data">
+                        <h2>Content for Button 1</h2>
+                        <img src="./assets/one.jpg" alt="">
+                        <p>This is the content for Button 1.</p>
+                        <button onclick="hideContent('content1')">Close</button>
+                    </div>
+                </div>
+                
+                <div id="content2" class="content" style="display: none">
+                    <div class="data">
+                        <h2>Content for Button 2</h2>
+                        <img src="./assets/two.jpg" alt="">
+                        <p>This is the content for Button 2.</p>
+                        <button onclick="hideContent('content2')">Close</button>
+                    </div>
+                </div>
+                
+                <div id="content3" class="content" style="display: none">
+                    <div class="data">
+                        <h2>Content for Button 3</h2>
+                        <img src="./assets/three.jpg" alt="">
+                        <p>This is the content for Button 3.</p>
+                        <button onclick="hideContent('content3')">Close</button>
+                    </div>
+                </div>
+
+                <div id="content4" class="content" style="display: none">
+                    <div class="data">
+                        <h2>Content for Button 4</h2>
+                        <p>This is the content for Button 4.</p>
+                        <button onclick="hideContent('content4')">Close</button>
+                    </div>
+                </div>
+
+                <div id="content5" class="content" style="display: none">
+                    <div class="data">
+                        <h2>Content for Button5</h2>
+                        <p>This is the content for Button 5.</p>
+                        <button onclick="hideContent('content5')">Close</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Add more content divs here -->
+        </div>
+    </div>
+
+    <script>
+        function showContent(id, button) {
+            // Remove "clicked" class from all buttons
+            var buttons = document.querySelectorAll('.button');
+            buttons.forEach(btn => {
+                btn.classList.remove('clicked');
+            });
+
+            // Add "clicked" class to the clicked button
+            button.classList.add('clicked');
+
+            // Hide all content divs
+            var contentDivs = document.querySelectorAll(".stickydiv > div");
+            contentDivs.forEach(function (div) {
+                div.classList.remove('show-content');
+            });
+
+            // Show the content div corresponding to the clicked button
+            var contentDiv = document.getElementById(id);
+            contentDiv.classList.add('show-content');
+
+            // Show the sticky div
+            var stickyDiv = document.getElementById("stickyDiv");
+            stickyDiv.style.display = "block";
+        }
+
+        function hideContent(id) {
+            var contentDiv = document.getElementById(id);
+            contentDiv.classList.remove('show-content');
+
+            // Hide the sticky div if no content div is visible
+            var contentDivs = document.querySelectorAll(".stickydiv > div");
+            var isVisible = Array.from(contentDivs).some(function (div) {
+                return div.classList.contains('show-content');
+            });
+            if (!isVisible) {
+                var stickyDiv = document.getElementById("stickyDiv");
+                stickyDiv.style.display = "none";
+            }
+        }
+    </script>
+</body>
+
+</html>
